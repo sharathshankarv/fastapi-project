@@ -15,3 +15,6 @@ class ProductResponse(ProductBase):
 
     class Config:
       model_config = {"from_attributes": True}
+
+class CustomStringResponse(BaseModel):
+    message: str
