@@ -1,7 +1,8 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from models.models_Product import Product as ProductModel
-from schemas.Schemas_Product import ProductCreate as ProductRequest
+from models.m_Product import Product as ProductModel
+from models.m_category import Category as CategoryModel
+from schemas.s_Product import ProductCreate as ProductRequest
 
 def fetch_all_products(session: Session):
   db_products = session.query(ProductModel).all()
@@ -16,8 +17,15 @@ def fetch_product_by_id(id: int, session: Session):
   return db_product
 
 def insert_product(session: Session, product: ProductRequest):
-  print("product", product)
+  print("Inserting product:", product)
   try:
+    print("Checking category existence for ID:", product.category)
+    cat = session.query(CategoryModel).filter(CategoryModel.id == product.category).first()
+    print("Category:", cat)
+    if not cat:
+      print("Category not found")
+      raise HTTPException(status_code=404, detail="Category not found")
+    
     db_product = ProductModel(**product.model_dump())
     session.add(db_product)
     session.flush()
@@ -31,6 +39,7 @@ def insert_product(session: Session, product: ProductRequest):
     print("Exception:", st)
     raise HTTPException(status_code=400, detail=st)
   
+# remove_product
 def remove_product(session: Session, id: int):
   product = session.query(ProductModel).filter(ProductModel.id == id).first()
   if not product:
@@ -44,5 +53,19 @@ def remove_product(session: Session, id: int):
   except Exception as e:
     raise HTTPException(status_code=400, detail="Could not delete the product.")
 
+# Update product
+def product_update(session: Session, id: int, pro: ProductRequest):
+  db_product = session.query(ProductModel).filter(ProductModel.id == id).first()
+  if not db_product:
+      raise HTTPException(status_code=404, detail="Product not found")
   
+  db_product.name = pro.name
+  db_product.description = pro.description
+  db_product.category = pro.category
+  db_product.price = pro.price
+  db_product.quantity = pro.quantity
+
+  session.commit()
+  session.refresh(db_product)
+  return "Product updated successfully"
   
