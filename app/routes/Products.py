@@ -1,7 +1,7 @@
 from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 from database import get_db
-from schemas.s_Product import ProductCreate as ProductRequest, ProductResponse
+from schemas.s_Products import ProductCreate as ProductRequest, ProductResponse
 from schemas.s_generic import CustomStringResponse
 from services.Product_services import *
 

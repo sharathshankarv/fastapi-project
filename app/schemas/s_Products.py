@@ -4,11 +4,11 @@ from .s_generic import BaseResponse
 class ProductBase(BaseModel):
   name: str
   description: str
-  category: int
+  category: str
   price: float
   quantity: int
 
 class ProductCreate(ProductBase):
     pass
 
-ProductResponse = BaseResponse[ProductBase]
+ProductResponse = ProductBase

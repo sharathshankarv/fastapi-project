@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from models.m_Product import Product as ProductModel
 from models.m_category import Category as CategoryModel
-from schemas.s_Product import ProductCreate as ProductRequest
+from schemas.s_Products import ProductCreate as ProductRequest
 
 def fetch_all_products(session: Session):
   db_products = session.query(ProductModel).all()
@@ -20,7 +20,7 @@ def insert_product(session: Session, product: ProductRequest):
   print("Inserting product:", product)
   try:
     print("Checking category existence for ID:", product.category)
-    cat = session.query(CategoryModel).filter(CategoryModel.id == product.category).first()
+    cat = session.query(CategoryModel).filter(CategoryModel.name == product.category).first()
     print("Category:", cat)
     if not cat:
       print("Category not found")
