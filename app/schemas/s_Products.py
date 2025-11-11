@@ -4,7 +4,7 @@ from .s_generic import BaseResponse
 class ProductBase(BaseModel):
   name: str
   description: str
-  category: str
+  category: int
   price: float
   quantity: int
 
