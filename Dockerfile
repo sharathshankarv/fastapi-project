@@ -7,7 +7,7 @@ ENV PYTHONPATH=/app
 WORKDIR /app
 
 #copy requirements file
-COPY requirements.txt /app/requirements.txt
+COPY Backend/requirements.txt /app/requirements.txt
 
 
 #install dependencies

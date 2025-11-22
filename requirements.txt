@@ -1,0 +1,8 @@
+uvicorn
+sqlalchemy
+pydantic
+pydantic-settings
+fastapi
+python-dotenv
+psycopg2-binary
+pydantic[email]
