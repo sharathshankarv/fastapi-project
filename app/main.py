@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from database import engine
 from routes.Products import router
 from routes.Categories import router as cat_router
+from routes.Users import router as user_router
 from models import create_tables
 
 @asynccontextmanager
@@ -15,6 +16,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.include_router(router)
 app.include_router(cat_router)
+app.include_router(user_router)
 
 
 app.add_middleware(
